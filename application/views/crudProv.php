@@ -6,61 +6,65 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--Modal para agregar usuario-->
   <div id="modal1" class="modal modal">
     <div class="modal-content">
-      <h4 >Agregar Usuario</h4>
+      <h4 >Agregar Proveedor</h4>
       <div class="row">
-        <form class="col s12" method="post" action='<?php echo base_url()."welcome/addUser";?>'>
+        <form class="col s12" method="post" action='<?php echo base_url()."welcome/addProv";?>'>
           <div class="row modal-form-row">
             <div class="input-field col s6">
-              <input id="nombre" type="text" name="nombre" class="validate" required>
-              <label for="nombre">Nombre</label>
+              <input id="razon_social" type="text" name="razon_social" class="validate" required>
+              <label for="razon_social">Razon social</label>
             </div>
             <div class="input-field col s6">
-              <input id="apellidos" name="apellidos" type="text" class="validate" required>
-              <label for="apellidos">Apellidos</label>
+              <input id="nombre_contacto" name="nombre_contacto" type="text" class="validate" required>
+              <label for="nombre_contacto">Nombre del contacto</label>
             </div>
           </div>      
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="RFC" type="text" name="RFC" class="validate" required>
+              <label for="RFC">RFC</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="banco" name="banco" type="text" class="validate" required>
+              <label for="banco">Banco</label>
+            </div>
+          </div>   
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="clabe" type="text" name="clabe" class="validate" required>
+              <label for="clabe">Clabe interbancaria</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="direccion" name="direccion" type="text" class="validate" required>
+              <label for="direccion">Dirección</label>
+            </div>
+          </div>
           <div class="row">
             <div class="input-field col s6">
               <input id="telefono" type="tel" name="telefono" class="validate" required>
               <label for="telefono">Teléfono</label>
             </div>
             <div class="input-field col s6">
-              <input id="correo" name="correo" type="email" class="validate" required>
-              <label for="correo">Correo</label>
-            </div>
-          </div>   
-          <div class="row">
-            <div class="input-field col s6">
-              <input id="departamento" type="text" name="departamento" class="validate" required>
-              <label for="departamento">Departamento</label>
-            </div>
-            <div class="input-field col s6">
-              <input id="comite_municipal" name="comite_municipal" type="text" class="validate" required>
-              <label for="comite_municipal">Comité municipal</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s6">
-              <input id="delegacion" type="text" name="delegacion" class="validate" required>
-              <label for="delegacion">Delegación</label>
-            </div>
-            <div class="input-field col s6">
-              <input id="comision" name="comision" type="text" class="validate" required>
-              <label for="comision">Comisión</label>
+              <input id="celular" name="celular" type="tel" class="validate" required>
+              <label for="celular">Teléfono celular</label>
             </div>
           </div>  
           <div class="row">
-            <div class="input-field col s6">
-              <input id="celular" type="text" name="celular" class="validate" required>
-              <label for="celular">Teléfono celular</label>
+            <div class="input-field col s3">
+              <input id="correo" type="email" name="correo" class="validate" required>
+              <label for="correo">Correo</label>
             </div>
             <div class="input-field col s3">
-              <input id="password" name="password" type="password" class="validate" required>
-              <label for="password">Contraseña</label>
+              <input id="ciudad" name="ciudad" type="text" class="validate" required>
+              <label for="ciudad">Ciudad</label>
             </div>
             <div class="input-field col s3">
-              <input id="nivel" name="nivel" type="text" class="validate" required>
-              <label for="nivel">Tipo de usuario</label>
+              <input id="estado" name="estado" type="text" class="validate" required>
+              <label for="estado">Estado</label>
+            </div>
+            <div class="input-field col s3">
+              <input id="id_ine" name="id_ine" type="text">
+              <label for="id_ine">ID INE(Opcional)</label>
             </div>
           </div> 
           <div class="row">
@@ -82,30 +86,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- Tabla de usuarios-->
 <table>
   <tr>
-    <th>Nombre</th>
-    <th>Apellidos</th>
+    <th>Razon social</th>
+    <th>RFC</th>
     <th>Teléfono</th>
     <th>Correo</th>
-    <th>Depto</th>
-    <th>Comite</th>
-    <th>Delegación</th>
-    <th>Comisión</th>
-    <th>Celular</th>
+    <th></th>
     <th></th>
   </tr>
   <?php
           foreach ($data->result() as $user) {
             echo "<tr>";
-            echo "<td>$user->nombre</td>";
-            echo "<td>$user->apellidos</td>";
+            echo "<td>$user->razon_social</td>";
+            echo "<td>$user->RFC</td>";
             echo "<td>$user->telefono</td>";
             echo "<td>$user->correo</td>";
-            echo "<td>$user->departamento</td>";
-            echo "<td>$user->comite_municipal</td>";
-            echo "<td>$user->delegacion</td>";
-            echo "<td>$user->comision</td>";
-            echo "<td>$user->celular</td>";
-            echo '<td><a href="'.base_url().'welcome/deleteUser?id='.$user->idusuarios.'"<i class="material-icons red-text center">delete</i></td>';
+            echo '<td><a href="'.base_url().'welcome/deleteProv?id='.$user->idproveedor.'"<i class="material-icons red-text center">delete</i></td>';
+            echo '<td><a href="'.base_url().'welcome/updateProv?id='.$user->idproveedor.'"<i class="material-icons red-text center">remove_red_eye</i></td>';
             echo "</tr>";
           }?> 
 </table>  

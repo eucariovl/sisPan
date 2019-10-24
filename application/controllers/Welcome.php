@@ -6,6 +6,7 @@ function __construct(){
 		parent::__construct();
 		$this->load->database();
 		$this->load->model('user_model');
+		$this->load->model('prov_model');
 	}
 	public function index(){
 		if(isset($_SESSION['username'])){
@@ -60,7 +61,7 @@ function __construct(){
 		}
 	}
 	public function verSolicitudes(){
-		if(isset($_SESSION['username'])){
+		if(isset($_SESSION['username'])&&$_SESSION['rol']>=1){
 			$test['user']=$this->user_model->data($_SESSION['username']);
 			$this->load->view('menu',$test);
 		}else{
@@ -68,9 +69,11 @@ function __construct(){
 		}
 	}
 	public function verProveedores(){
-		if(isset($_SESSION['username'])){
+		if(isset($_SESSION['username'])&&$_SESSION['rol']>=1){
 			$test['user']=$this->user_model->data($_SESSION['username']);
+			$test['data']=$this->prov_model->get_prov();
 			$this->load->view('menu',$test);
+			$this->load->view('crudProv',$test);
 		}else{
 		$this->load->view('loginv2');
 		}
@@ -86,14 +89,57 @@ function __construct(){
 		}
 	}
 	public function addUser(){
-		if(isset($_SESSION['username'])){
+		if(isset($_SESSION['username'])&&$_SESSION['rol']>=1){
 			$test['user']=$this->user_model->data($_SESSION['username']);
-			$this->load->view('menu',$test);
-		
 			$this->user_model->add_user($_POST);
 			redirect('welcome/verUsuarios');
 			}else{
-		$this->load->view('loginv2');
+		redirect('welcome');
+		}
+	}
+	public function deleteUser(){
+		if(isset($_SESSION['username'])&&$_SESSION['rol']>=1){
+			$this->user_model->delete_user($_GET['id']);
+			redirect('welcome/verUsuarios');
+		}else{
+		redirect('welcome');
+		}
+	}
+
+	public function addProv(){
+		if(isset($_SESSION['username'])&&$_SESSION['rol']>=1){
+			$test['user']=$this->user_model->data($_SESSION['username']);
+			$this->prov_model->add_prov($_POST);
+			redirect('welcome/verProveedores');
+			}else{
+		redirect('welcome');
+		}
+	}
+	public function deleteProv(){
+		if(isset($_SESSION['username'])&&$_SESSION['rol']>=1){
+			$this->prov_model->delete_prov($_GET['id']);
+			redirect('welcome/verProveedores');
+		}else{
+		redirect('welcome');
+		}}
+
+		//Método para actualizar al proveedor
+	public function updateProv(){
+		if(isset($_SESSION['username'])&&$_SESSION['rol']>=1){
+			$test['prov']=$this->prov_model->get_prov_detalle($_GET['id']);
+			$test['user']=$this->user_model->data($_SESSION['username']);
+			$this->load->view('menu',$test);
+			$this->load->view('modProv',$test);
+		}else{
+		redirect('welcome');
+		}
+	}
+	public function updateProvTrue(){
+		if(isset($_SESSION['username'])&&$_SESSION['rol']>=1){
+			$this->prov_model->update_prov($_GET['id'],$_POST);
+			redirect('welcome/verProveedores');
+		}else{
+		redirect('welcome');
 		}
 	}
 }

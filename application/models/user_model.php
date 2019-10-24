@@ -24,6 +24,7 @@ class user_model extends CI_Model{
 		
 	}
 	function get_user(){
+		$this->db->where('estado',1);
 		$result= $this->db->get('usuarios');
 		return $result;
 		
@@ -32,6 +33,11 @@ class user_model extends CI_Model{
 		If(!$this->db->insert('usuarios',$data)){
 			return $error = $this->db->error();
 			}
+	}
+	function delete_user($id){
+		$this->db->set('estado',0);
+		$this->db->where('idusuarios',$id);
+		$this->db->update('usuarios');
 	}
 	
 }?>
