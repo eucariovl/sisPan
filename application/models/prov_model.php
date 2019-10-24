@@ -6,7 +6,7 @@ class prov_model extends CI_Model{
 		
 	}
 	function get_prov(){
-		$this->db->where('activo',1);
+		//$this->db->where('activo',1);
 		$result= $this->db->get('proveedor');
 		return $result;
 		
@@ -17,7 +17,7 @@ class prov_model extends CI_Model{
 			}
 	}
 	function delete_prov($id){
-		$this->db->set('activo',0);
+		//$this->db->set('activo',0);
 		$this->db->where('idproveedor',$id);
 		$this->db->update('proveedor');
 	}
